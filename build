@@ -1,0 +1,12 @@
+#!/bin/sh
+
+echo "Compiling..."
+javac Solver.java
+
+if ! [ -s ./Solver.jar ]; then
+    echo "Building Jar..."
+    jar cvfe Solver.jar Solver *.class
+else
+    echo "Updating Jar..."
+    zip -u Solver.jar *.class
+fi
