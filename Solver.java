@@ -291,6 +291,8 @@ public class Solver {
         }
         if (method == Method.IDA) currentDepth = maxCost;
         this.put(init);
+        
+        if (method != Method.IDA && method != Method.ASD) visited.add(ByteBuffer.wrap(init.board.getState()));
 
         // the main loop
         while (!boardSolved && !this.isEmpty()) {
@@ -334,7 +336,7 @@ public class Solver {
                             currentDepth = currentDepth + 1;
                     }
                 default: // all methods except IDA
-                    visited.add(ByteBuffer.wrap(fringe.board.getState()));
+            //        visited.add(ByteBuffer.wrap(fringe.board.getState()));
 
             }
 
@@ -349,6 +351,7 @@ public class Solver {
                         if (method != Method.IDA || 
                             b.distance() + fringe.moves <= currentDepth) {
                                 this.put(new Node(b, fringe, this.method));
+                                if(method != Method.IDA && method != Method.ASD) visited.add(ByteBuffer.wrap(b.getState()));
                                 childrenAdded++;
                         }
                     }
